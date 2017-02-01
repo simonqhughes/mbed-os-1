@@ -29,6 +29,7 @@
 #include "FATFileHandle.h"
 #include "FATDirHandle.h"
 #include "critical.h"
+//#include "ff.h"
 #include <errno.h>
 
 
@@ -273,6 +274,7 @@ FileHandle *FATFileSystem::open(const char* name, int flags) {
     if (res) {
         debug_if(FFS_DBG, "f_open('w') failed: %d\n", res);
         unlock();
+        FATFileSystemSetErrno(res);
         return NULL;
     }
     if (flags & O_APPEND) {
